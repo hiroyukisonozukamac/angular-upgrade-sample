@@ -8,14 +8,16 @@ This repository demonstrates step-by-step Angular upgrades from v9 to v18,
 including build/runtime performance benchmarks for each major version.
 
 ## ディレクトリ構成
+```
 angular-upgrade-sample/
- ├─ v9/    # Angular 9 プロジェクト
- ├─ v10/   # Angular 10 アップグレード版
- ├─ v12/   # Angular 12 アップグレード版（予定）
- ├─ v14/   # Angular 14 アップグレード版（予定）
- ├─ v18/   # Angular 18 アップグレード版（予定）
+ ├─ v9/                     # Angular 9 プロジェクト
+ ├─ v10/                    # Angular 10 アップグレード版
+ ├─ v12/                    # Angular 12 アップグレード版（予定）
+ ├─ v14/                    # Angular 14 アップグレード版（予定）
+ ├─ v18/                    # Angular 18 アップグレード版（予定）
  ├─ performance-results.md  # バージョン別ビルド/実行性能比較
  └─ README.md
+```
 
 ## 各バージョンのソース
 - [v9 ソースコード](./v9)
