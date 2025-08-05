@@ -1,0 +1,16 @@
+{
+  // Git コミットメッセージで Copilot にガイドラインを参照させる
+  "github.copilot.advanced": {
+    "promptInjection": {
+      "gitCommitMessage": "コミットメッセージは .github/COMMIT_MESSAGE_GUIDELINES.md に従って作成してください。type(scope): description の形式で、scope は対象バージョンや対象モジュール、description は簡潔に記載してください。"
+    }
+  },
+
+  // Copilot が自動提案を有効化する範囲を拡張
+  "github.copilot.enable": {
+    "*": true,
+    "plaintext": true,
+    "markdown": true,
+    "scminput": true // Git コミットメッセージ欄
+  }
+}
