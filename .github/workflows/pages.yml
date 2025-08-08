@@ -1,0 +1,77 @@
+name: Deploy Angular multi versions to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - dir: performance-test/v9
+            publicPath: v9
+            node: 14
+          - dir: performance-test/v10
+            publicPath: v10
+            node: 16
+          - dir: performance-test/v12
+            publicPath: v12
+            node: 16
+          - dir: performance-test/v14
+            publicPath: v14
+            node: 18
+          - dir: performance-test/v18
+            publicPath: v18
+            node: 20
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+          cache-dependency-path: ${{ matrix.dir }}/package-lock.json
+
+      - name: Install deps
+        working-directory: ${{ matrix.dir }}
+        run: npm ci
+
+      - name: Build
+        working-directory: ${{ matrix.dir }}
+        run: |
+          # リポジトリ名に合わせて base-href を自動設定
+          npx ng build --configuration production \
+            --base-href "/${{ github.event.repository.name }}/${{ matrix.publicPath }}/" \
+            --output-path "../../dist/${{ matrix.publicPath }}"
+
+      - name: Add 404.html
+        run: |
+          cp "dist/${{ matrix.publicPath }}/index.html" "dist/${{ matrix.publicPath }}/404.html"
+
+      # dist を Pages 用アーティファクトにアップロード（各マトリクスrun分がマージされる）
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
