@@ -64,7 +64,7 @@ jobs:
       # dist を Pages 用アーティファクトにアップロード（各マトリクスrun分がマージされる）
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: performance-test/v9/dist/angular-v9-sample
 
   deploy:
     needs: build
