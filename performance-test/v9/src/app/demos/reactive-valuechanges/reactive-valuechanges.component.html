@@ -1,0 +1,33 @@
+<h3>Reactive Forms <code>valueChanges</code> 発火動作（変更点確認用）</h3>
+
+<p>
+  Angular Reactive Forms における
+  <code>&lt;input type="number"&gt;</code> の <code>valueChanges</code> 発火回数を確認します。
+</p>
+
+<p>
+  <strong>v9:</strong> スピンボタン操作で 2回発火<br>
+  <strong>v10以降:</strong> 全入力方法で 1回のみ発火
+</p>
+
+<hr>
+
+<form [formGroup]="form">
+  <label for="num">数値入力:</label>
+  <input
+    id="num"
+    type="number"
+    formControlName="numberInput"
+    style="width:120px; margin-left:8px;"
+  >
+</form>
+
+<div style="margin-top:10px;">
+  <button (click)="resetLog()">ログクリア</button>
+</div>
+
+<p>発火回数: {{ count }}</p>
+
+<ul>
+  <li *ngFor="let entry of log">{{ entry }}</li>
+</ul>

@@ -1,0 +1,57 @@
+<h3>Large Table Performance Test</h3>
+<p style="color: gray; font-size: 0.9rem;">
+  Angular の <code>*ngFor</code> を使い描画性能を確認できます。
+</p>
+
+<p>
+  行数: {{ displayedData.length | number }} 件  
+  <br>
+  描画完了時間: 
+  <span *ngIf="renderTime !== null">
+    {{ renderTime | number: '1.0-2' }} ms
+  </span>
+  <span *ngIf="renderTime === null">計測中...</span>
+</p>
+
+<!-- ページサイズ切替 -->
+<label>
+  ページサイズ:
+  <select [(ngModel)]="selectedPageSize" 
+          (ngModelChange)="onPageSizeChange($event)">
+    <option *ngFor="let size of pageSizeOptions" [value]="size">
+      {{ size }}
+    </option>
+  </select>
+</label>
+
+<!-- テーブル（10カラム） -->
+<table class="simple-table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Col1</th>
+      <th>Col2</th>
+      <th>Col3</th>
+      <th>Col4</th>
+      <th>Col5</th>
+      <th>Col6</th>
+      <th>Col7</th>
+      <th>Col8</th>
+      <th>Col9</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let row of displayedData">
+      <td>{{ row.id }}</td>
+      <td>{{ row.col1 }}</td>
+      <td>{{ row.col2 }}</td>
+      <td>{{ row.col3 }}</td>
+      <td>{{ row.col4 }}</td>
+      <td>{{ row.col5 }}</td>
+      <td>{{ row.col6 }}</td>
+      <td>{{ row.col7 }}</td>
+      <td>{{ row.col8 }}</td>
+      <td>{{ row.col9 }}</td>
+    </tr>
+  </tbody>
+</table>

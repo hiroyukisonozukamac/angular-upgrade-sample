@@ -1,0 +1,158 @@
+<h3>Validators: minLength / maxLength（lengthの型による挙動の変更）</h3>
+<p class="sub">
+  Angular v10 で <strong>minLength / maxLength の判定対象</strong> が変更されました。
+</p>
+
+<div class="notes">
+  <p>
+    <strong>変更点:</strong><br>
+    v9 … <em>length プロパティがあれば型に関係なく判定</em><br>
+    v10 … <em>length プロパティが <u>数値型</u> の場合のみ判定</em>
+  </p>
+</div>
+
+<style>
+  .changed td {
+    background-color: #fff3cd;
+    /* 薄い黄色 */
+  }
+
+  .badge.valid {
+    background: #28a745;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+
+  .badge.invalid {
+    background: #dc3545;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+
+  td>div {
+    margin-top: 4px;
+    font-size: 0.9em;
+    color: #444;
+  }
+
+  code {
+    background-color: #f4f4f4;
+    padding: 2px 4px;
+    border-radius: 3px;
+  }
+</style>
+
+<table class="grid">
+  <thead>
+    <tr>
+      <th>ケース</th>
+      <th>FormControl定義</th>
+      <th>v9 の挙動</th>
+      <th>v10 の挙動</th>
+      <th>現在の状態</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <!-- String -->
+    <tr>
+      <td><strong>String</strong></td>
+      <td><code>new FormControl('ab', Validators.minLength(3))</code></td>
+      <td>検知する</td>
+      <td>同上（変更なし）</td>
+      <td>
+        <span class="badge" [class.valid]="status('strMin3')==='VALID'" [class.invalid]="status('strMin3')==='INVALID'">
+          {{ status('strMin3') }}
+        </span>
+        <div>
+          値:
+          <input type="text" [formControl]="form.controls['strMin3']" style="width:150px;" />
+        </div>
+      </td>
+      <td><!-- 操作ボタンは不要に --> </td>
+    </tr>
+
+    <!-- Array -->
+    <tr>
+      <td><strong>Array</strong></td>
+      <td><code>new FormControl([1,2,3,4], Validators.maxLength(3))</code></td>
+      <td>検知する</td>
+      <td>同上（変更なし）</td>
+      <td>
+        <span class="badge" [class.valid]="status('arrMax3')==='VALID'" [class.invalid]="status('arrMax3')==='INVALID'">
+          {{ status('arrMax3') }}
+        </span>
+        <div>
+          値:
+          <code>{{ form.get('arrMax3')?.value?.join(', ') }}</code>
+        </div>
+      </td>
+      <td>
+        <button (click)="pushArray()">追加</button>
+        <button (click)="popArray()">削除</button>
+      </td>
+    </tr>
+
+
+    <!-- Object length:number -->
+    <tr>
+      <td><strong>Object</strong>（length:number）</td>
+      <td><code>new FormControl({{ '{' }} length: 2 {{ '}' }}, Validators.minLength(3))</code></td>
+      <td>検知する</td>
+      <td>同上（変更なし）</td>
+      <td>
+        <span class="badge" [class.valid]="status('objLenNumMin3')==='VALID'"
+          [class.invalid]="status('objLenNumMin3')==='INVALID'">
+          {{ status('objLenNumMin3') }}
+        </span>
+        <div>値: <code>{{ form.get('objLenNumMin3')?.value | json }}</code></div>
+      </td>
+      <td>
+        <button (click)="setObjLenNum(2)">length=2</button>
+        <button (click)="setObjLenNum(4)">length=4</button>
+      </td>
+    </tr>
+
+    <!-- Object length:string -->
+    <tr class="changed">
+      <td><strong>Object</strong>（length:string）</td>
+      <td><code>new FormControl({{ '{' }} length: '2' {{ '}' }}, Validators.minLength(3))</code></td>
+      <td>検知する</td>
+      <td>検知しない</td>
+      <td>
+        <span class="badge" [class.valid]="status('objLenStrMin3')==='VALID'"
+          [class.invalid]="status('objLenStrMin3')==='INVALID'">
+          {{ status('objLenStrMin3') }}
+        </span>
+        <div>値: <code>{{ form.get('objLenStrMin3')?.value | json }}</code></div>
+      </td>
+      <td>
+        <button (click)="setObjLenStr('2')">length='2'</button>
+        <button (click)="setObjLenStr('10')">length='10'</button>
+      </td>
+    </tr>
+
+    <!-- Object no length -->
+    <tr>
+      <td><strong>Object</strong>（no length）</td>
+      <td><code>new FormControl({{ '{' }} foo: 1 {{ '}' }}, Validators.minLength(1))</code></td>
+      <td>検知しない</td>
+      <td>同上（変更なし）</td>
+      <td>
+        <span class="badge" [class.valid]="status('objNoLenMin3')==='VALID'"
+          [class.invalid]="status('objNoLenMin3')==='INVALID'">
+          {{ status('objNoLenMin3') }}
+        </span>
+        <div>
+          値:
+          <code>foo: {{ form.get('objNoLenMin3')?.value?.foo || 'undefined' }}</code>
+        </div>
+      </td>
+      <td><button (click)="toggleNoLen()">値を切り替え</button></td>
+    </tr>
+
+  </tbody>
+</table>

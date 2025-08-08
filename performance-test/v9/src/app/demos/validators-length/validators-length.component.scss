@@ -1,0 +1,19 @@
+.sub { color: #666; margin: 4px 0 12px; }
+
+table.grid {
+  width: 100%;
+  border-collapse: collapse;
+  th, td { border: 1px solid #ddd; padding: 8px; vertical-align: top; }
+  th { background: #fafafa; text-align: left; }
+  code { white-space: pre-wrap; }
+}
+
+.badge {
+  display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 11px;
+  &.valid { background: #e6f4ea; color: #137333; }
+  &.invalid { background: #fde7e9; color: #b00020; }
+}
+
+.notes { color: #555; font-size: 13px; margin-top: 12px; }
+button { margin-right: 6px; }
+u { text-underline-offset: 2px; }

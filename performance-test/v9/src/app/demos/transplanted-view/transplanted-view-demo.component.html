@@ -1,0 +1,52 @@
+<h2 class="main-title">テンプレートの変更検知（宣言側 vs 表示側）</h2>
+
+<p class="hint">
+    <strong>動作の違い:</strong><br>
+    各トリガーは、その側だけで変更検知（今回は <code>count++</code>）を実行します。<br>
+    v9 は「宣言側トリガー」「表示側トリガー」どちらでも、両方のビューの表示値が更新されます（変更検知が両方に伝播）。<br>
+    v10+ は「宣言側トリガー」では宣言側の表示は更新されるが、表示側が更新されず「表示側（挿入ポイント）トリガー」の場合のみ両方が更新されます。
+</p>
+
+<!-- 操作 -->
+<section class="controls card">
+    <button (click)="runDeclarationOnly()">宣言側トリガー</button>
+    <button (click)="runDisplayOnly()">表示側トリガー</button>
+    <button (click)="reset()">リセット</button>
+</section>
+
+<!-- 可視化：左右同じ count。変更検知が走った側が点滅 -->
+<section class="compare card">
+    <!-- 宣言側 -->
+    <div class="panel">
+        <div class="panel-head">
+            <h3>宣言側</h3>
+            <span class="badge" [class.blink]="declarationBlink">変更検知</span>
+        </div>
+        <div class="count" [class.blink]="declarationBlink">{{ count }}</div>
+        <small class="muted">このコンポーネントのテンプレート</small>
+    </div>
+
+    <!-- 表示側 -->
+    <div class="panel">
+        <div class="panel-head">
+            <h3>表示側</h3>
+            <span class="badge alt" [class.blink]="displayBlink">変更検知</span>
+        </div>
+
+        <!-- 親が宣言した <ng-template> をここ（表示側）で描画 -->
+        <app-insertion-host (viewChecked)="onDisplayChecked()">
+            <ng-template>
+                <div class="count" [class.blink]="displayBlink">{{ count }}</div>
+                <small class="muted">表示側の変更検知で更新</small>
+            </ng-template>
+        </app-insertion-host>
+    </div>
+</section>
+
+<!-- ログ -->
+<section class="log card">
+    <h3>操作ログ</h3>
+    <ul>
+        <li *ngFor="let log of logs">{{ log }}</li>
+    </ul>
+</section>

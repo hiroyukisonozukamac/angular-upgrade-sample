@@ -1,0 +1,94 @@
+<h3>Material Table Performance Test</h3>
+<p style="color: gray; font-size: 0.9rem;">
+  Angular Material の <code>mat-table</code> を使用し、<br>
+  描画性能を確認できます。
+</p>
+
+<p>
+  行数: {{ dataSource.data.length | number }} 件  
+  <br>
+  描画完了時間:
+  <span *ngIf="tableReadyTime !== null">
+    {{ tableReadyTime | number: '1.0-2' }} ms
+  </span>
+  <span *ngIf="tableReadyTime === null">
+    計測中...
+  </span>
+</p>
+
+<!-- ページサイズ切替 -->
+<label for="rowCount">表示件数切替:</label>
+<select id="rowCount" (change)="onPageSizeChange($event.target.value)">
+  <option value="0" selected>0</option>
+  <option value="50">50</option>
+  <option value="30000">30000</option>
+</select>
+
+<!-- Material Table -->
+<table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 full-width-table">
+  
+  <!-- ID -->
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+    <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+  </ng-container>
+
+  <!-- Col1 -->
+  <ng-container matColumnDef="col1">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Col1</th>
+    <td mat-cell *matCellDef="let element">{{ element.col1 }}</td>
+  </ng-container>
+
+  <!-- Col2 -->
+  <ng-container matColumnDef="col2">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Col2</th>
+    <td mat-cell *matCellDef="let element">{{ element.col2 }}</td>
+  </ng-container>
+
+  <!-- Col3 -->
+  <ng-container matColumnDef="col3">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Col3</th>
+    <td mat-cell *matCellDef="let element">{{ element.col3 }}</td>
+  </ng-container>
+
+  <!-- Col4 -->
+  <ng-container matColumnDef="col4">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Col4</th>
+    <td mat-cell *matCellDef="let element">{{ element.col4 }}</td>
+  </ng-container>
+
+  <!-- Col5 -->
+  <ng-container matColumnDef="col5">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Col5</th>
+    <td mat-cell *matCellDef="let element">{{ element.col5 }}</td>
+  </ng-container>
+
+  <!-- Col6 -->
+  <ng-container matColumnDef="col6">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Col6</th>
+    <td mat-cell *matCellDef="let element">{{ element.col6 }}</td>
+  </ng-container>
+
+  <!-- Col7 -->
+  <ng-container matColumnDef="col7">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Col7</th>
+    <td mat-cell *matCellDef="let element">{{ element.col7 }}</td>
+  </ng-container>
+
+  <!-- Col8 -->
+  <ng-container matColumnDef="col8">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Col8</th>
+    <td mat-cell *matCellDef="let element">{{ element.col8 }}</td>
+  </ng-container>
+
+  <!-- Col9 -->
+  <ng-container matColumnDef="col9">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Col9</th>
+    <td mat-cell *matCellDef="let element">{{ element.col9 }}</td>
+  </ng-container>
+
+  <!-- ヘッダー行 -->
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <!-- データ行 -->
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

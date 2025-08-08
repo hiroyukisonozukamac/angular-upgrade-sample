@@ -1,0 +1,14 @@
+<h3>NgRx パフォーマンステスト（Effect経由のみ）</h3>
+<button (click)="testEffect()">Effect負荷テスト（疑似API100回呼び出し）</button>
+
+<p *ngIf="effectTotalTime !== null">
+  Effect合計完了時間: {{ effectTotalTime }} ms
+</p>
+<p>呼び出し回数: {{ effectCalls$ | async }}</p>
+
+<h4>各Effect完了時間</h4>
+<ul>
+  <li *ngFor="let t of (effectTimes$ | async); let i = index">
+    {{ i + 1 }}回目: {{ t | number:'1.0-2' }} ms
+  </li>
+</ul>

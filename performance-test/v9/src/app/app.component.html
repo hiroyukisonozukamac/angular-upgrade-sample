@@ -1,0 +1,25 @@
+<!-- 挙動差・仕様確認デモ（差分検証用） -->
+<nav style="padding: 10px; background: #1976d2; color: white;">
+  <span style="margin-right:20px; font-weight:bold;">挙動・仕様確認</span>
+  <a routerLink="/demos/reactive-valuechanges" style="color:white; margin-right:10px;">
+    Reactive Valuechanges
+  </a>
+  <a routerLink="demos/validators-length" style="color:white; margin-right:10px;">
+    Validators Length
+  </a>
+  <a routerLink="demos/transplanted-view" style="color:white; margin-right:10px;">
+    Transplanted View
+  </a>
+</nav>
+
+<!-- 性能比較用（全バージョン共通） -->
+<nav style="padding: 10px; background: #455a64; color: white; margin-top:5px;">
+  <span style="margin-right:20px; font-weight:bold;">性能比較</span>
+  <a routerLink="benchmarks/large-table" style="color:white; margin-right:10px;">Large Table</a>
+  <a routerLink="benchmarks/material-grid" style="color:white; margin-right:10px;">Material Grid</a>
+  <a routerLink="benchmarks/ngrx-counter" style="color:white;">NgRx Counter</a>
+</nav>
+
+<div style="padding: 20px;">
+  <router-outlet></router-outlet>
+</div>
