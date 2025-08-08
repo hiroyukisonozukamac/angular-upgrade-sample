@@ -22,18 +22,18 @@ jobs:
           - dir: performance-test/v9
             publicPath: v9
             node: 14
-          - dir: performance-test/v10
-            publicPath: v10
-            node: 16
-          - dir: performance-test/v12
-            publicPath: v12
-            node: 16
-          - dir: performance-test/v14
-            publicPath: v14
-            node: 18
-          - dir: performance-test/v18
-            publicPath: v18
-            node: 20
+          # - dir: performance-test/v10
+          #   publicPath: v10
+          #   node: 16
+          # - dir: performance-test/v12
+          #   publicPath: v12
+          #   node: 16
+          # - dir: performance-test/v14
+          #   publicPath: v14
+          #   node: 18
+          # - dir: performance-test/v18
+          #   publicPath: v18
+          #   node: 20
 
     steps:
       - uses: actions/checkout@v4
